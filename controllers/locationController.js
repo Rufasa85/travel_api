@@ -14,6 +14,20 @@ router.get("/",(req,res)=>{
     })
 })
 
+router.get("/:id",(req,res)=>{
+    Location.findByPk(req.params.id,{
+        include:[Trip]
+    }).then(locData=>{
+        res.json(locData)
+    }).catch(err=>{
+        console.log(err);
+        res.status(500).json({
+            msg:"oh no errorz!",
+            err
+        })
+    })
+})
+
 router.post("/",(req,res)=>{
     Location.create({
         name:req.body.name
